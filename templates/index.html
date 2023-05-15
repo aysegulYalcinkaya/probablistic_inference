@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OEg5zJ1GVDzpqwYkZzUzJy4MCi5eSx/7ILZCrsrZefrxTc9BeQqJpMwaQ3Gdr6Y+"
+            crossorigin="anonymous"></script>
+    <title>Probabilistic Inference</title>
+    <style>
+        .tooltipx {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        span:hover + .tooltipx {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="container justify-content-center">
+    <h1>Cold-Flu Probabilistic Inference</h1>
+    <div class="row">
+        <div class="col-6">
+            <div class="mt-5"><h2 class="text-center">Contingency Table (Counts of Events)</h2></div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>&nbsp</th>
+                    <th>&nbsp</th>
+                    <th colspan="2" class="text-center">Diagnosis</th>
+                    <th>&nbsp</th>
+                </tr>
+                <tr>
+                    <th>&nbsp</th>
+                    <th>&nbsp</th>
+                    <th>Cold</th>
+                    <th>Flu</th>
+                    <th>&nbsp</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th rowspan="2">Symptoms</th>
+                    <th>S</th>
+                    <td><input id="cold_s" type="number" value="4" onchange="myFunction()"></td>
+                    <td><input id="flu_s" type="number" value="5" onchange="myFunction()"></td>
+                    <td class="text-center text-danger"><span id="total_s">9</span></td>
+                </tr>
+                <tr>
+                    <th>NS</th>
+                    <td><input id="cold_ns" type="number" value="7" onchange="myFunction()"></td>
+                    <td><input id="flu_ns" type="number" value="9" onchange="myFunction()"></td>
+                    <td class="text-center text-danger"><span id="total_ns">16</span></td>
+                </tr>
+                <tr>
+                    <td>&nbsp</td>
+                    <td>&nbsp</td>
+                    <td class="text-center text-danger"><span id="total_cold">11</td>
+                    <td class="text-center text-danger"><span id="total_flu">14</>
+                    <td class="text-center text-danger"><span id="total">25</>
+
+                </tbody>
+            </table>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>&nbsp</th>
+                    <th>&nbsp</th>
+                    <th colspan="2" class="text-center">Diagnosis</th>
+                    <th>&nbsp</th>
+                </tr>
+                <tr>
+                    <th>&nbsp</th>
+                    <th>&nbsp</th>
+                    <th>Cold</th>
+                    <th>Flu</th>
+                    <th>&nbsp</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th rowspan="2">Symptoms</th>
+                    <th>S</th>
+                    <td>P(S, Cold)</td>
+                    <td>P(S, Flu)</td>
+                    <td>P(S)</td>
+                </tr>
+                <tr>
+                    <th>NS</th>
+                    <td>P(NS, Cold)</td>
+                    <td>P(NS, Flu)</td>
+                    <td>P(NS)</td>
+                </tr>
+                <tr>
+                    <td>&nbsp</td>
+                    <td>&nbsp</td>
+                    <td>P(Cold)</td>
+                    <td>P(Flu)</td>
+                    <td></td>
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <div class="col-6">
+            <div class="mt-5"><h2 class="text-center">Joint and Marginal Probabilities</h2></div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>&nbsp</th>
+                    <th>&nbsp</th>
+                    <th colspan="2" class="text-center">Diagnosis</th>
+                    <th>&nbsp</th>
+                </tr>
+                <tr>
+                    <th>&nbsp</th>
+                    <th>&nbsp</th>
+                    <th>Cold</th>
+                    <th>Flu</th>
+                    <th>&nbsp</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th rowspan="2">Symptoms</th>
+                    <th>S</th>
+                    <td class="text-center"><span class="s_cold_pro">0.16</span>
+                        <div class="s_cold_pro_tooltip tooltipx"></div>
+                    </td>
+                    <td class="text-center"><span class="s_flu_pro">0.2</span>
+                        <div class="s_flu_pro_tooltip tooltipx"></div>
+                    </td>
+                    <td class="text-center"><span class="s_total_pro">0.36</span>
+                        <div class="s_total_pro_tooltip tooltipx"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>NS</th>
+                    <td class="text-center"><span class="ns_cold_pro">0.28</span>
+                        <div class="ns_cold_pro_tooltip tooltipx"></div>
+                    </td>
+                    <td class="text-center"><span class="ns_flu_pro">0.36</span>
+                        <div class="ns_flu_pro_tooltip tooltipx"></div>
+                    </td>
+                    <td class="text-center"><span class="ns_total_pro">0.64</span>
+                        <div class="ns_total_pro_tooltip tooltipx"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp</td>
+                    <td>&nbsp</td>
+                    <td class="text-center"><span class="total_cold_pro">0.44</span>
+                        <div class="total_cold_pro_tooltip tooltipx"></div>
+                    </td>
+                    <td class="text-center"><span class="total_flu_pro">0.56</span>
+                        <div class="total_flu_pro_tooltip tooltipx"></div>
+                    </td>
+                    <td class="text-center"><span class="total_pro">1</span></td>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th colspan="4">Likelihood</th>
+                <th colspan="4">Posterior</th>
+                <th colspan="3">(Likelihood X Prior) / Total Evidence</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th rowspan="2">P(S | Cold)</th>
+                <td>P(S, Cold)</td>
+                <td><span class="s_cold_pro"></span>
+                    <div class="s_cold_pro_tooltip tooltipx"></div>
+                </td>
+                <td rowspan="2"><span id="p_s_given_cold"></span>
+                    <div id="p_s_given_cold_tooltip" class="tooltipx"></div>
+                </td>
+
+                <th rowspan="2">P(Cold | S)</th>
+                <td>P(S, Cold)</td>
+                <td><span class="s_cold_pro"></span>
+                    <div class="s_cold_pro_tooltip tooltipx"></div>
+                </td>
+                <td rowspan="2"><span id="p_cold_given_s"></span>
+                    <div id="p_cold_given_s_tooltip" class="tooltipx"></div>
+                </td>
+
+                <td>P(S | Cold) x P(Cold)</td>
+                <td><span id="p_s_given_cold_cold"></span>
+                <div id="p_s_given_cold_cold_tooltip" class="tooltipx"></div></td>
+                <td rowspan="2"><span id="p_s_given_cold_cold_total"></span>
+                    <div id="p_s_given_cold_cold_total_tooltip" class="tooltipx"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td>P(Cold)</td>
+                <td><span class="total_cold_pro"></span>
+                    <div class="total_cold_pro_tooltip tooltipx"></div>
+                </td>
+                <td>P(S)</td>
+                <td><span class="s_total_pro"></span>
+                    <div class="s_total_pro_tooltip tooltipx"></div>
+                </td>
+                <td>P(S)</td>
+                <td><span class="s_total_pro"></span>
+                    <div class="s_total_pro_tooltip tooltipx"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <th rowspan="2">P(NS | Cold)</th>
+                <td>P(NS, Cold)</td>
+                <td><span class="ns_cold_pro"></span>
+                    <div class="ns_cold_pro_tooltip tooltipx"></div>
+                </td>
+                <td rowspan="2"><span id="p_ns_given_cold"></span>
+                    <div id="p_ns_given_cold_tooltip" class="tooltipx"></div>
+                </td>
+
+                <th rowspan="2">P(Cold | NS)</th>
+                <td>P(NS, Cold)</td>
+                <td><span class="s_cold_pro"></span>
+                    <div class="s_cold_pro_tooltip tooltipx"></div>
+                </td>
+                <td rowspan="2"><span id="p_cold_given_ns"></span>
+                    <div id="p_cold_given_ns_tooltip" class="tooltipx"></div>
+                </td>
+
+                <td>P(NS | Cold) x P(Cold)</td>
+                <td><span id="p_ns_given_cold_cold"></span></td>
+                <td rowspan="2"><span id="p_ns_given_cold_cold_total"></span>
+                    <div id="p_ns_given_cold_cold_total_tooltip" class="tooltipx"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td>P(Cold)</td>
+                <td><span class="total_cold_pro"></span>
+                    <div class="total_cold_pro_tooltip tooltipx"></div>
+                </td>
+                <td>P(NS)</td>
+                <td><span class="ns_total_pro"></span>
+                    <div class="ns_total_pro_tooltip tooltipx"></div>
+                </td>
+                <td>P(NS)</td>
+                <td><span class="ns_total_pro"></span>
+                    <div class="ns_total_pro_tooltip tooltipx"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <th rowspan="2">P(S | Flu)</th>
+                <td>P(S, Flu)</td>
+                <td><span class="s_flu_pro"></span>
+                    <div class="s_flu_pro_tooltip tooltipx"></div>
+                </td>
+                <td rowspan="2"><span id="p_s_given_flu"></span>
+                    <div id="p_s_given_flu_tooltip" class="tooltipx"></div>
+                </td>
+
+                <th rowspan="2">P(Flu | S)</th>
+                <td>P(S, Flu)</td>
+                <td><span class="s_flu_pro"></span>
+                    <div class="s_flu_pro_tooltip tooltipx"></div>
+                </td>
+                <td rowspan="2"><span id="p_flu_given_s"></span>
+                    <div id="p_flu_given_s_tooltip" class="tooltipx"></div>
+                </td>
+
+                <td>P(S | Flu) x P(Flu)</td>
+                <td><span id="p_s_given_flu_flu"></span></td>
+                <td rowspan="2"><span id="p_s_given_flu_flu_total"></span>
+                    <div id="p_s_given_flu_flu_total_tooltip" class="tooltipx"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td>P(Flu)</td>
+                <td><span class="total_flu_pro"></span>
+                    <div class="total_flu_pro_tooltip tooltipx"></div>
+                </td>
+                <td>P(S)</td>
+                <td><span class="s_total_pro"></span>
+                    <div class="s_total_pro_tooltip tooltipx"></div>
+                </td>
+                <td>P(S)</td>
+                <td><span class="s_total_pro"></span>
+                    <div class="s_total_pro_tooltip tooltipx"></div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        myFunction();
+    })
+
+    function setValues(elementList, val, tooltiplist) {
+        for (let i = 0; i < elementList.length; i++) {
+            elementList[i].innerHTML = val.toFixed(2);
+            tooltiplist[i].innerHTML = val;
+        }
+    }
+
+    function myFunction() {
+        const cold_s = parseInt(document.getElementById("cold_s").value);
+        const flu_s = parseInt(document.getElementById("flu_s").value);
+        const cold_ns = parseInt(document.getElementById("cold_ns").value);
+        const flu_ns = parseInt(document.getElementById("flu_ns").value);
+        const total_s = cold_s + flu_s
+        const total_ns = cold_ns + flu_ns
+        const total_cold = cold_s + cold_ns
+        const total_flu = flu_s + flu_ns
+        const total = total_cold + total_flu
+        const s_cold_pro = cold_s / total
+        const ns_cold_pro = cold_ns / total
+        const s_flu_pro = flu_s / total
+        const ns_flu_pro = flu_ns / total
+        const total_s_pro = s_cold_pro + s_flu_pro
+        const total_ns_pro = ns_cold_pro + ns_flu_pro
+        const total_cold_pro = s_cold_pro + ns_cold_pro
+        const total_flu_pro = s_flu_pro + ns_flu_pro
+
+        document.getElementById("total_s").innerText = total_s;
+        document.getElementById("total_ns").innerText = total_ns;
+        document.getElementById("total_cold").innerText = total_cold;
+        document.getElementById("total_flu").innerText = total_flu;
+        document.getElementById("total").innerText = total;
+
+        let elementList = document.getElementsByClassName("s_cold_pro");
+        let tooltipList = document.getElementsByClassName("s_cold_pro_tooltip");
+        setValues(elementList, s_cold_pro, tooltipList)
+        elementList = document.getElementsByClassName("ns_cold_pro");
+        tooltipList = document.getElementsByClassName("ns_cold_pro_tooltip");
+        setValues(elementList, ns_cold_pro, tooltipList)
+        elementList = document.getElementsByClassName("s_total_pro");
+        tooltipList = document.getElementsByClassName("s_total_pro_tooltip");
+        setValues(elementList, total_s_pro, tooltipList)
+        elementList = document.getElementsByClassName("s_flu_pro");
+        tooltipList = document.getElementsByClassName("s_flu_pro_tooltip");
+        setValues(elementList, s_flu_pro, tooltipList)
+        elementList = document.getElementsByClassName("ns_flu_pro");
+        tooltipList = document.getElementsByClassName("ns_flu_pro_tooltip");
+        setValues(elementList, ns_flu_pro, tooltipList)
+        elementList = document.getElementsByClassName("ns_total_pro");
+        tooltipList = document.getElementsByClassName("ns_total_pro_tooltip");
+        setValues(elementList, total_ns_pro, tooltipList)
+        elementList = document.getElementsByClassName("total_cold_pro");
+        tooltipList = document.getElementsByClassName("total_cold_pro_tooltip");
+        setValues(elementList, total_cold_pro, tooltipList)
+        elementList = document.getElementsByClassName("total_flu_pro");
+        tooltipList = document.getElementsByClassName("total_flu_pro_tooltip");
+        setValues(elementList, total_flu_pro, tooltipList)
+
+        document.getElementById("p_s_given_cold").innerText = (s_cold_pro / total_cold_pro).toFixed(2);
+        document.getElementById("p_s_given_cold_tooltip").innerText = (s_cold_pro / total_cold_pro);
+        document.getElementById("p_cold_given_s").innerText = (s_cold_pro / total_s_pro).toFixed(2);
+        document.getElementById("p_cold_given_s_tooltip").innerText = (s_cold_pro / total_s_pro);
+        document.getElementById("p_s_given_cold_cold").innerText = ((s_cold_pro / total_cold_pro) * total_cold_pro).toFixed(2);
+        document.getElementById("p_s_given_cold_cold_tooltip").innerText = ((s_cold_pro / total_cold_pro) * total_cold_pro);
+        document.getElementById("p_s_given_cold_cold_total").innerText = ((s_cold_pro / total_cold_pro) * total_cold_pro / total_s_pro).toFixed(2);
+        document.getElementById("p_s_given_cold_cold_total_tooltip").innerText = ((s_cold_pro / total_cold_pro) * total_cold_pro / total_s_pro);
+
+
+    }
+</script>
+</body>
+</html>
