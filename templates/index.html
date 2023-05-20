@@ -16,23 +16,66 @@
         .tooltipx {
             display: none;
             position: absolute;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
+            background-color: #afafaf;
+            border: 1px solid #000;
+            padding: 6px;
         }
 
         span:hover + .tooltipx {
             display: block;
         }
+
+        input {
+            width: 80px;
+        }
+
+        .text-danger {
+            font-weight: bold;
+        }
+        table{
+            margin-bottom: 0px !important;
+
+        }
+        .yellow{
+            background-color: yellow !important;
+        }
+        .aqua{
+            background-color: #00ffff !important;
+        }
+        .greenyellow{
+            background-color: #adff2f !important;
+        }
+        .aquamarine{
+            background-color: #7fffd4 !important;
+        }
+        .darksalmon{
+            background-color: #e9967a !important;
+        }
+        .lightblue{
+            background-color: #add8e6 !important;
+        }
+        .hotpink{
+            background-color: #ff69b4 !important;
+        }
+        .bisque{
+            background-color: #ffe4c4 !important;
+        }
     </style>
 </head>
 <body>
 <div class="container justify-content-center">
-    <h1>Cold-Flu Probabilistic Inference</h1>
+    <h1 class="mt-5">Cold-Flu Probabilistic Inference</h1>
+    <p>Hover the cells to see the exact values</p>
     <div class="row">
-        <div class="col-6">
-            <div class="mt-5"><h2 class="text-center">Contingency Table (Counts of Events)</h2></div>
-            <table class="table table-bordered">
+        <div class="col-8">
+            <div class="mt-5"><h3 class="text-center">Contingency Table (Counts of Events)</h3></div>
+        </div>
+
+        <div class="col-4">
+            <div class="mt-5"><h3 class="text-center">Joint and Marginal Probabilities</h3></div>
+        </div>
+        <div class="col-4" style="background-color: black;color: white;margin-bottom: 1rem;margin-top: -;padding-top: 12px;padding-bottom: 12px;">
+            <table class="table table-bordered" style="color: chartreuse;">
                 <thead>
                 <tr>
                     <th>&nbsp</th>
@@ -52,26 +95,27 @@
                 <tr>
                     <th rowspan="2">Symptoms</th>
                     <th>S</th>
-                    <td><input id="cold_s" type="number" value="4" onchange="myFunction()"></td>
-                    <td><input id="flu_s" type="number" value="5" onchange="myFunction()"></td>
-                    <td class="text-center text-danger"><span id="total_s">9</span></td>
+                    <td><input id="cold_s" type="number" value="4" onchange="calculate()"></td>
+                    <td><input id="flu_s" type="number" value="5" onchange="calculate()"></td>
+                    <td class="text-center text-danger"><span id="total_s"></span></td>
                 </tr>
                 <tr>
                     <th>NS</th>
-                    <td><input id="cold_ns" type="number" value="7" onchange="myFunction()"></td>
-                    <td><input id="flu_ns" type="number" value="9" onchange="myFunction()"></td>
-                    <td class="text-center text-danger"><span id="total_ns">16</span></td>
+                    <td><input id="cold_ns" type="number" value="7" onchange="calculate()"></td>
+                    <td><input id="flu_ns" type="number" value="9" onchange="calculate()"></td>
+                    <td class="text-center text-danger"><span id="total_ns"></span></td>
                 </tr>
                 <tr>
                     <td>&nbsp</td>
                     <td>&nbsp</td>
-                    <td class="text-center text-danger"><span id="total_cold">11</td>
-                    <td class="text-center text-danger"><span id="total_flu">14</>
-                    <td class="text-center text-danger"><span id="total">25</>
+                    <td class="text-center text-danger"><span id="total_cold"></td>
+                    <td class="text-center text-danger"><span id="total_flu"></>
+                    <td class="text-center text-danger"><span id="total"></>
 
                 </tbody>
             </table>
-
+        </div>
+        <div class="col-4">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -92,31 +136,29 @@
                 <tr>
                     <th rowspan="2">Symptoms</th>
                     <th>S</th>
-                    <td>P(S, Cold)</td>
-                    <td>P(S, Flu)</td>
-                    <td>P(S)</td>
+                    <td class="yellow">P(S, Cold)</td>
+                    <td class="aqua">P(S, Flu)</td>
+                    <td class="greenyellow">P(S)</td>
                 </tr>
                 <tr>
                     <th>NS</th>
-                    <td>P(NS, Cold)</td>
-                    <td>P(NS, Flu)</td>
-                    <td>P(NS)</td>
+                    <td class="aquamarine">P(NS, Cold)</td>
+                    <td class="darksalmon">P(NS, Flu)</td>
+                    <td class="lightblue">P(NS)</td>
                 </tr>
                 <tr>
                     <td>&nbsp</td>
                     <td>&nbsp</td>
-                    <td>P(Cold)</td>
-                    <td>P(Flu)</td>
+                    <td class="hotpink">P(Cold)</td>
+                    <td class="bisque">P(Flu)</td>
                     <td></td>
 
                 </tbody>
             </table>
 
+
         </div>
-
-
-        <div class="col-6">
-            <div class="mt-5"><h2 class="text-center">Joint and Marginal Probabilities</h2></div>
+        <div class="col-4">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -137,35 +179,35 @@
                 <tr>
                     <th rowspan="2">Symptoms</th>
                     <th>S</th>
-                    <td class="text-center"><span class="s_cold_pro">0.16</span>
+                    <td class="text-center yellow" ><span class="s_cold_pro"></span>
                         <div class="s_cold_pro_tooltip tooltipx"></div>
                     </td>
-                    <td class="text-center"><span class="s_flu_pro">0.2</span>
+                    <td class="text-center aqua"><span class="s_flu_pro"></span>
                         <div class="s_flu_pro_tooltip tooltipx"></div>
                     </td>
-                    <td class="text-center"><span class="s_total_pro">0.36</span>
+                    <td class="text-center greenyellow"><span class="s_total_pro"></span>
                         <div class="s_total_pro_tooltip tooltipx"></div>
                     </td>
                 </tr>
                 <tr>
                     <th>NS</th>
-                    <td class="text-center"><span class="ns_cold_pro">0.28</span>
+                    <td class="text-center aquamarine"><span class="ns_cold_pro"></span>
                         <div class="ns_cold_pro_tooltip tooltipx"></div>
                     </td>
-                    <td class="text-center"><span class="ns_flu_pro">0.36</span>
+                    <td class="text-center darksalmon"><span class="ns_flu_pro"></span>
                         <div class="ns_flu_pro_tooltip tooltipx"></div>
                     </td>
-                    <td class="text-center"><span class="ns_total_pro">0.64</span>
+                    <td class="text-center lightblue"><span class="ns_total_pro"></span>
                         <div class="ns_total_pro_tooltip tooltipx"></div>
                     </td>
                 </tr>
                 <tr>
                     <td>&nbsp</td>
                     <td>&nbsp</td>
-                    <td class="text-center"><span class="total_cold_pro">0.44</span>
+                    <td class="text-center hotpink"><span class="total_cold_pro"></span>
                         <div class="total_cold_pro_tooltip tooltipx"></div>
                     </td>
-                    <td class="text-center"><span class="total_flu_pro">0.56</span>
+                    <td class="text-center bisque"><span class="total_flu_pro"></span>
                         <div class="total_flu_pro_tooltip tooltipx"></div>
                     </td>
                     <td class="text-center"><span class="total_pro">1</span></td>
@@ -189,8 +231,8 @@
             <tbody style="vertical-align: middle">
             <tr>
                 <th rowspan="2">P(S | Cold)</th>
-                <td>P(S, Cold)</td>
-                <td><span class="s_cold_pro"></span>
+                <td class="yellow">P(S, Cold)</td>
+                <td class="yellow"><span class="s_cold_pro"></span>
                     <div class="s_cold_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_s_given_cold"></span>
@@ -198,41 +240,42 @@
                 </td>
 
                 <th rowspan="2">P(Cold | S)</th>
-                <td>P(S, Cold)</td>
-                <td><span class="s_cold_pro"></span>
+                <td class="yellow">P(S, Cold)</td>
+                <td class="yellow"><span class="s_cold_pro"></span>
                     <div class="s_cold_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_cold_given_s"></span>
                     <div id="p_cold_given_s_tooltip" class="tooltipx"></div>
                 </td>
 
-                <td>P(S | Cold) x P(Cold)</td>
-                <td><span id="p_s_given_cold_cold"></span>
-                <div id="p_s_given_cold_cold_tooltip" class="tooltipx"></div></td>
+                <td class="yellow">P(S | Cold) x P(Cold)</td>
+                <td class="yellow"><span id="p_s_given_cold_cold"></span>
+                    <div id="p_s_given_cold_cold_tooltip" class="tooltipx"></div>
+                </td>
                 <td rowspan="2"><span id="p_s_given_cold_cold_total"></span>
                     <div id="p_s_given_cold_cold_total_tooltip" class="tooltipx"></div>
                 </td>
 
             </tr>
             <tr>
-                <td>P(Cold)</td>
-                <td><span class="total_cold_pro"></span>
+                <td class="hotpink">P(Cold)</td>
+                <td class="hotpink"><span class="total_cold_pro"></span>
                     <div class="total_cold_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(S)</td>
-                <td><span class="s_total_pro"></span>
+                <td class="greenyellow">P(S)</td>
+                <td class="greenyellow"><span class="s_total_pro"></span>
                     <div class="s_total_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(S)</td>
-                <td><span class="s_total_pro"></span>
+                <td class="greenyellow">P(S)</td>
+                <td class="greenyellow"><span class="s_total_pro"></span>
                     <div class="s_total_pro_tooltip tooltipx"></div>
                 </td>
             </tr>
 
             <tr>
                 <th rowspan="2">P(NS | Cold)</th>
-                <td>P(NS, Cold)</td>
-                <td><span class="ns_cold_pro"></span>
+                <td class="aquamarine">P(NS, Cold)</td>
+                <td class="aquamarine"><span class="ns_cold_pro"></span>
                     <div class="ns_cold_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_ns_given_cold"></span>
@@ -240,41 +283,42 @@
                 </td>
 
                 <th rowspan="2">P(Cold | NS)</th>
-                <td>P(NS, Cold)</td>
-                <td><span class="s_cold_pro"></span>
+                <td class="aquamarine">P(NS, Cold)</td>
+                <td class="aquamarine"><span class="s_cold_pro"></span>
                     <div class="s_cold_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_cold_given_ns"></span>
                     <div id="p_cold_given_ns_tooltip" class="tooltipx"></div>
                 </td>
 
-                <td>P(NS | Cold) x P(Cold)</td>
-                <td><span id="p_ns_given_cold_cold"></span>
-                <div id="p_ns_given_cold_cold_tooltip" class="tooltipx"></div></td>
+                <td class="aquamarine">P(NS | Cold) x P(Cold)</td>
+                <td class="aquamarine"><span id="p_ns_given_cold_cold"></span>
+                    <div id="p_ns_given_cold_cold_tooltip" class="tooltipx"></div>
+                </td>
                 <td rowspan="2"><span id="p_ns_given_cold_cold_total"></span>
                     <div id="p_ns_given_cold_cold_total_tooltip" class="tooltipx"></div>
                 </td>
 
             </tr>
             <tr>
-                <td>P(Cold)</td>
-                <td><span class="total_cold_pro"></span>
+                <td class="hotpink">P(Cold)</td>
+                <td class="hotpink"><span class="total_cold_pro"></span>
                     <div class="total_cold_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(NS)</td>
-                <td><span class="ns_total_pro"></span>
+                <td class="lightblue">P(NS)</td>
+                <td class="lightblue"><span class="ns_total_pro"></span>
                     <div class="ns_total_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(NS)</td>
-                <td><span class="ns_total_pro"></span>
+                <td class="lightblue">P(NS)</td>
+                <td class="lightblue"><span class="ns_total_pro"></span>
                     <div class="ns_total_pro_tooltip tooltipx"></div>
                 </td>
             </tr>
 
             <tr>
                 <th rowspan="2">P(S | Flu)</th>
-                <td>P(S, Flu)</td>
-                <td><span class="s_flu_pro"></span>
+                <td class="aqua">P(S, Flu)</td>
+                <td class="aqua"><span class="s_flu_pro"></span>
                     <div class="s_flu_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_s_given_flu"></span>
@@ -282,41 +326,42 @@
                 </td>
 
                 <th rowspan="2">P(Flu | S)</th>
-                <td>P(S, Flu)</td>
-                <td><span class="s_flu_pro"></span>
+                <td class="aqua">P(S, Flu)</td>
+                <td class="aqua"><span class="s_flu_pro"></span>
                     <div class="s_flu_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_flu_given_s"></span>
                     <div id="p_flu_given_s_tooltip" class="tooltipx"></div>
                 </td>
 
-                <td>P(S | Flu) x P(Flu)</td>
-                <td><span id="p_s_given_flu_flu"></span>
-                <div id="p_s_given_flu_flu_tooltip" class="tooltipx"></div></td>
+                <td class="aqua">P(S | Flu) x P(Flu)</td>
+                <td class="aqua"><span id="p_s_given_flu_flu"></span>
+                    <div id="p_s_given_flu_flu_tooltip" class="tooltipx"></div>
+                </td>
                 <td rowspan="2"><span id="p_s_given_flu_flu_total"></span>
                     <div id="p_s_given_flu_flu_total_tooltip" class="tooltipx"></div>
                 </td>
 
             </tr>
             <tr>
-                <td>P(Flu)</td>
-                <td><span class="total_flu_pro"></span>
+                <td class="bisque">P(Flu)</td>
+                <td class="bisque"><span class="total_flu_pro"></span>
                     <div class="total_flu_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(S)</td>
-                <td><span class="s_total_pro"></span>
+                <td class="greenyellow">P(S)</td>
+                <td class="greenyellow"><span class="s_total_pro"></span>
                     <div class="s_total_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(S)</td>
-                <td><span class="s_total_pro"></span>
+                <td class="greenyellow">P(S)</td>
+                <td class="greenyellow"><span class="s_total_pro"></span>
                     <div class="s_total_pro_tooltip tooltipx"></div>
                 </td>
             </tr>
 
             <tr>
                 <th rowspan="2">P(NS | Flu)</th>
-                <td>P(NS, Flu)</td>
-                <td><span class="ns_flu_pro"></span>
+                <td class="darksalmon">P(NS, Flu)</td>
+                <td class="darksalmon"><span class="ns_flu_pro"></span>
                     <div class="ns_flu_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_ns_given_flu"></span>
@@ -324,33 +369,34 @@
                 </td>
 
                 <th rowspan="2">P(Flu | NS)</th>
-                <td>P(NS, Flu)</td>
-                <td><span class="ns_flu_pro"></span>
+                <td class="darksalmon">P(NS, Flu)</td>
+                <td class="darksalmon"><span class="ns_flu_pro"></span>
                     <div class="ns_flu_pro_tooltip tooltipx"></div>
                 </td>
                 <td rowspan="2"><span id="p_flu_given_ns"></span>
                     <div id="p_flu_given_ns_tooltip" class="tooltipx"></div>
                 </td>
 
-                <td>P(NS | Flu) x P(Flu)</td>
-                <td><span id="p_ns_given_flu_flu"></span>
-                <div id="p_ns_given_flu_flu_tooltip" class="tooltipx"></div></td>
+                <td class="darksalmon">P(NS | Flu) x P(Flu)</td>
+                <td class="darksalmon"><span id="p_ns_given_flu_flu"></span>
+                    <div id="p_ns_given_flu_flu_tooltip" class="tooltipx"></div>
+                </td>
                 <td rowspan="2"><span id="p_ns_given_flu_flu_total"></span>
                     <div id="p_ns_given_flu_flu_total_tooltip" class="tooltipx"></div>
                 </td>
 
             </tr>
             <tr>
-                <td>P(Flu)</td>
-                <td><span class="total_flu_pro"></span>
+                <td class="bisque">P(Flu)</td>
+                <td class="bisque"><span class="total_flu_pro"></span>
                     <div class="total_flu_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(NS)</td>
-                <td><span class="ns_total_pro"></span>
+                <td class="lightblue">P(NS)</td>
+                <td class="lightblue"><span class="ns_total_pro"></span>
                     <div class="ns_total_pro_tooltip tooltipx"></div>
                 </td>
-                <td>P(NS)</td>
-                <td><span class="ns_total_pro"></span>
+                <td class="lightblue">P(NS)</td>
+                <td class="lightblue"><span class="ns_total_pro"></span>
                     <div class="ns_total_pro_tooltip tooltipx"></div>
                 </td>
             </tr>
@@ -368,7 +414,7 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        myFunction();
+        calculate();
     })
 
     function setValues(elementList, val, tooltiplist) {
@@ -378,13 +424,13 @@
         }
     }
 
-    function myFunction() {
+    function calculate() {
         const cold_s = parseInt(document.getElementById("cold_s").value);
         const flu_s = parseInt(document.getElementById("flu_s").value);
         const cold_ns = parseInt(document.getElementById("cold_ns").value);
         const flu_ns = parseInt(document.getElementById("flu_ns").value);
 
-        if (cold_s<0 || flu_s<0 || cold_ns<0 || flu_ns<0){
+        if (cold_s < 0 || flu_s < 0 || cold_ns < 0 || flu_ns < 0) {
             alert("Input values cannot be negative!! Correct the values");
             return;
         }
